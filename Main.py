@@ -68,6 +68,3 @@ def main():
 
 if __name__=="__main__":
     main()
-git add .
-git commit -m "Agregando la clase Paciente y el menú de la clínica"
-git push origin main
