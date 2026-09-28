@@ -1,8 +1,10 @@
 from paciente import Paciente
+from departameto import Departamento
 Pacientes:list[Paciente]=[
     Paciente("11.111.111-1","Juan Perez", 30, "Fonasa"),
     Paciente("22.222.222-2", "Maria Gonzales", 25, "Isapre")
     ]
+Departamentos:list[Departamento]=[]    
 
 def leer_numero(mensaje:str)->int:
     while True:
@@ -21,10 +23,82 @@ def menu():
     print("3.- Eliminar paciente")
     print("4.- Mostrar un paciente")
     print("5.- Mostrar todos los pacientes")
+    print("Opciones de departamento:")
+    print("6.- Agregar departamento")
+    print("7.- Editar departamento")
+    print("8.- Eliminar departamento")
+    print("9.- Mostrar un departamento")
+    print("10.- Mostrar todos los departamentos")
     print("0- Salir")
     op=leer_numero("Ingrese una opción: ")
-    print("="*20)
     return op
+
+# Funciones para manejar departamentos
+
+def agregar_departamento()-> None:
+    ID_Depto=leer_numero("Ingrese el ID del departamento: ")
+    nombre=input("Ingrese el nombre del departamento: ")
+    nuevo_depto=Departamento(ID_Depto,nombre)
+    piso=leer_numero("Ingrese el piso del departamento: ")
+    nuevo_depto.Piso=piso
+    Departamentos.append(nuevo_depto)
+    print("Departamento agregado exitosamente.")
+    print(f"Total de departamentos: {len(Departamentos)}")
+
+def Buscar_departamento()->Departamento:
+    ID_Depto=leer_numero("Ingrese el ID del departamento: ")
+    for d in Departamentos:
+        if d.Id_Departamento==ID_Depto:
+            return d
+    print("Departamento no encontrado.")
+    return None
+
+def imprimir_departamento()->None:
+    Depto = Buscar_departamento()
+    if Depto:
+        print(Depto)
+    else:
+        print("No se encontró el departamento.")
+
+def imprimir_departamentos()->None:
+    if len(Departamentos)==0:
+        print("No hay departamentos registrados.")
+    else:
+        for Depto in Departamentos:
+            print(Depto)
+            print("-"*20)
+
+def editar_departamento()->None:
+    Depto = Buscar_departamento()
+    if Depto:
+        print(Depto)
+        print("Menu de edición")
+        print("1.- Editar nombre")
+        print("2.- Editar piso")
+        print("0.- Salir")
+        op=leer_numero("Ingrese una opción: ")
+        if op==1:
+            nombre_nuevo=input("Ingrese nuevo nombre: ")
+            Depto.Nombre=nombre_nuevo
+            print("Nombre actualizado.")
+        elif op==2:
+            piso_nuevo=leer_numero("Ingrese nuevo piso: ")
+            Depto.Piso=piso_nuevo
+            print("Piso actualizado.")
+        elif op==0:
+            print("Saliendo del menú de edición.")
+        else:
+            print("Opción inválida. No se realizaron cambios.")
+    else:
+        print("No se encontró el departamento.")
+
+def eliminar_departamento()->None:
+    Depto = Buscar_departamento()
+    if Depto:
+        Departamentos.remove(Depto)
+        print("Departamento eliminado.")
+
+# Funciones para manejar pacientes
 
 def agregar_paciente()-> None:
     rut=input("Ingrese el RUT del paciente: ")
@@ -123,6 +197,7 @@ def editar_paciente()->None:
     else:
         print("No se encontró el paciente.")
 
+# Bucle paciente
 
 def main():
     while True:
@@ -142,6 +217,21 @@ def main():
         elif opcion==5:
             print("Mostrar todos los pacientes")
             imprimir_pacientes()
+        elif opcion==6:
+            print("Agregar departamento")
+            agregar_departamento()
+        elif opcion==7:
+            print("Editar departamento")
+            editar_departamento()
+        elif opcion==8:
+            print("Eliminar departamento")
+            eliminar_departamento()
+        elif opcion==9:
+            print("Mostrar un departamento")
+            imprimir_departamento()
+        elif opcion==10:
+            print("Mostrar todos los departamentos")
+            imprimir_departamentos()
         elif opcion==0:
             print("Saliendo del programa...")
             break
