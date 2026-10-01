@@ -21,7 +21,9 @@ class Paciente:
     
     @nombre.setter
     def nombre(self,nombre:str)-> None:
-        self._nombre = nombre
+        if not isinstance(nombre, str) or len(nombre.strip())<2:
+            raise ValueError("El nombre debe tener al menos 2 caracteres")
+        self._nombre = nombre.strip().upper()
     
     @property
     def edad(self)->int:
@@ -29,6 +31,10 @@ class Paciente:
     
     @edad.setter
     def edad(self,edad:int)-> None:
+        if not isinstance(edad, int):
+            raise TypeError("La edad debe ser un número entero.")
+        if edad < 0 or edad > 125:
+            raise ValueError("La edad debe ser un valor biologicamente valido (entre 0 y 125 años)")
         self._edad=edad
     
     @property
@@ -37,6 +43,12 @@ class Paciente:
     
     @prevision.setter
     def prevision(self,prevision:str)-> None:
+        if not isinstance(prevision, str):
+            raise TypeError("La prevision debe ser una cadena de texto")
+        prevision_limpio = prevision.strip().capitalize()
+        if prevision_limpio not in self.PREVISIONES_VALIDAS:
+            opciones = ",".join(self.PREVISIONES_VALIDAS)
+            raise ValueError(f"Prevision '{prevision}' no valido, Opciones permitidas: {opciones}.")
         self._prevision=prevision
     
     def __str__(self)-> str:
